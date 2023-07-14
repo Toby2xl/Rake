@@ -15,7 +15,7 @@ public class StoreItems
     public string UPCNumber { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; } = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
     public DateTime LastModified { get; set; } = DateTime.UtcNow;
-    public QuantityDetails QuantityDetail { get; set; } = default!;
-    public virtual Item Item { get; set; } = default!; //assign to new instances if EfCore complains
-    public virtual Warehouse Warehouse { get; set; } = default!;
+    public QuantityDetails QuantityDetail { get; set; } = null!;
+    public virtual Item Item { get; set; } = null!; //assign to new instances if EfCore complains
+    public virtual Warehouse Warehouse { get; set; } = null!;
 }
