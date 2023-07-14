@@ -2,7 +2,6 @@ using System;
 
 namespace Inventory.Core.Entities;
 
-public class Branches
+public class Branch
 {
-    
 }

@@ -14,11 +14,9 @@ public class Warehouse : Entity<Guid>
     public string Code { get; set; } = string.Empty;
     public string Address { get; set; } = string.Empty;
 
-
     private readonly List<Item> _storeItems = new();
     public IReadOnlyCollection<Item> StockItems => _storeItems.AsReadOnly();
     public ICollection<StoreItems> WarehouseItems { get; set; } = new List<StoreItems>();
-
 
     private Warehouse() {}
     public Warehouse(string name, string description, DateTime createdAt, int tenantId, string code, string address, int branchId)

@@ -4,5 +4,4 @@ namespace Inventory.Core.Entities;
 
 public class Tenants
 {
-    
 }
