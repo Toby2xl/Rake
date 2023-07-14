@@ -8,7 +8,7 @@ public class Tenants
     public int Sn { get; set; }
     public string TenantName { get; set; } = string.Empty;
     public string SchoolName { get; set; } = string.Empty;
-    public DateTime? DateOnboarded { get; set; } = DateTime.UtcNow;
+    public DateTime? DateOnboarded { get; set; }
     public int? NoOfSubscribedUsers { get; set; }
     public DateTime? SubscriptionDate { get; set; }
     public DateTime? SubscriptionExpiryDate { get; set; }
