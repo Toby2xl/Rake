@@ -14,7 +14,7 @@ public class Item : Entity<Guid>
     public string UPCNumber { get; set; } = string.Empty;
     public string Unit { get; set; } = string.Empty;
     public bool IsForSale { get; set; }
-    public bool SoftDelete { get; set; }
+    public bool IsoftDeleted { get; set; }
     public decimal Price { get; set; }
     public decimal CostPrice { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
@@ -67,7 +67,11 @@ public class Item : Entity<Guid>
         //Category.Name = categoryName;
     }
 
-    // Soft Delete an Item by Setting its Soft Delete to true........
+    // Soft Delete an Item by Setting its IsoftDeleted property to true........
+    public void SoftDelete()
+    {
+        IsoftDeleted = true;
+    }
     // Update/Change the Name of an Item......
     // Get the Total Quantity of an Item, if Item is available............. 
 }
