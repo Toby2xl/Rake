@@ -18,7 +18,7 @@ public class SqlDesignTimeDb : IDesignTimeDbContextFactory<InventoryDbContext>
     public InventoryDbContext CreateDbContext(string[] args)
     {
         var builder = new DbContextOptionsBuilder<InventoryDbContext>();
-        builder.UseNpgsql("Host = localhost; Username = postgres; Password = MCdonald12; Database = Rake-InvnetoryDB");
+        
         //builder.UseNpgsql(_config?.GetConnectionString("RakeDbConn"));
 
         return new InventoryDbContext(builder.Options);

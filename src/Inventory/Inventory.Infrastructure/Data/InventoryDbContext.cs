@@ -15,7 +15,7 @@ public class InventoryDbContext : DbContext
         optionsBuilder
                 .LogTo(
                     action: Console.WriteLine,
-                    minimumLevel: LogLevel.Warning
+                    minimumLevel: LogLevel.Information
                 );
     }
 
@@ -42,7 +42,7 @@ public class InventoryDbContext : DbContext
             entity.HasKey(e => e.BranchId)
                 .HasName("tbl_Branch_pkey");
 
-            entity.ToTable("tbl_Branch");
+            entity.ToTable("Branch");
 
             entity.Property(e => e.BranchId)
                 .HasColumnName("BranchID");
@@ -56,7 +56,7 @@ public class InventoryDbContext : DbContext
 
         modelBuilder.Entity<Tenants>(entity =>
         {
-            entity.ToTable("tbl_Tenant");
+            entity.ToTable("Tenants");
 
             entity.Property(e => e.Id)
                 .HasColumnName("ID")
