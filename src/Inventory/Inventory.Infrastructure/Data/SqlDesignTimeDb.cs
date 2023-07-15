@@ -8,7 +8,7 @@ namespace Inventory.Infrastructure.Data;
 
 public class SqlDesignTimeDb : IDesignTimeDbContextFactory<InventoryDbContext>
 {
-    private readonly IConfiguration _config;
+    private readonly IConfiguration? _config;
     public SqlDesignTimeDb(IConfiguration config)
     {
         _config = config;
@@ -19,7 +19,7 @@ public class SqlDesignTimeDb : IDesignTimeDbContextFactory<InventoryDbContext>
     {
         var builder = new DbContextOptionsBuilder<InventoryDbContext>();
         builder.UseNpgsql("Host = localhost; Username = postgres; Password = MCdonald12; Database = Rake-InvnetoryDB");
-        //builder.UseNpgsql(_config.GetConnectionString(""));
+        //builder.UseNpgsql(_config?.GetConnectionString("RakeDbConn"));
 
         return new InventoryDbContext(builder.Options);
     }

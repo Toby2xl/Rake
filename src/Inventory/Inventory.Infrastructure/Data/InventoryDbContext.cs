@@ -15,7 +15,7 @@ public class InventoryDbContext : DbContext
         optionsBuilder
                 .LogTo(
                     action: Console.WriteLine,
-                    minimumLevel: LogLevel.Information
+                    minimumLevel: LogLevel.Warning
                 );
     }
 
@@ -24,7 +24,8 @@ public class InventoryDbContext : DbContext
     public DbSet<Item> Items { get; set; } = null!;
     public DbSet<Branch> Branches { get; set; } = null!;
     public DbSet<Tenants> Tenants { get; set; } = null!;
-    //public DbSet<StoreItems> StoreItems { get; set; } = null!;
+    public virtual DbSet<Category> Categories { get; set; } = null!;
+    public DbSet<StoreItems> StoreItems { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -83,6 +84,21 @@ public class InventoryDbContext : DbContext
             entity.Property(e => e.TenantName).HasMaxLength(100);
         });
 
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.ToTable("InvCategory");
+            entity.HasIndex(e => e.TenantId);
+            entity.HasIndex(e => e.BranchId);
+
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Name).HasMaxLength(50).IsRequired();
+            entity.Property(e => e.TenantId).IsRequired();
+            entity.Property(e => e.BranchId).IsRequired();
+
+            entity.HasMany(e => e.ItemCategories).WithOne(e => e.Category)
+                                                 .HasForeignKey(e => e.CategoryID).OnDelete(DeleteBehavior.SetNull);
+        });
+
         modelBuilder.Entity<StoreItems>(entity =>
         {
             entity.ToTable("InvStoreItems");
@@ -98,7 +114,5 @@ public class InventoryDbContext : DbContext
             entity.Property(e => e.BranchId).IsRequired();
             entity.Property(e => e.TenantId).IsRequired();
         });
-
-        
     }
 }
