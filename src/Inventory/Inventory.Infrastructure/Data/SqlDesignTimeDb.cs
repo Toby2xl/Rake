@@ -13,11 +13,12 @@ public class SqlDesignTimeDb : IDesignTimeDbContextFactory<InventoryDbContext>
     {
         _config = config;
     }
+    public SqlDesignTimeDb(){}
 
     public InventoryDbContext CreateDbContext(string[] args)
     {
         var builder = new DbContextOptionsBuilder<InventoryDbContext>();
-        //builder.UseNpgsql("Host = localhost; Username = postgres; Password = MCdonald12; Database = inventory");
+        builder.UseNpgsql("Host = localhost; Username = postgres; Password = MCdonald12; Database = Rake-InvnetoryDB");
         //builder.UseNpgsql(_config.GetConnectionString(""));
 
         return new InventoryDbContext(builder.Options);

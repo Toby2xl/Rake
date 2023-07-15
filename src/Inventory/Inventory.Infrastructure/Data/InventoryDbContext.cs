@@ -24,7 +24,7 @@ public class InventoryDbContext : DbContext
     public DbSet<Item> Items { get; set; } = null!;
     public DbSet<Branch> Branches { get; set; } = null!;
     public DbSet<Tenants> Tenants { get; set; } = null!;
-    public DbSet<StoreItems> StoreItems { get; set; } = null!;
+    //public DbSet<StoreItems> StoreItems { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -82,5 +82,23 @@ public class InventoryDbContext : DbContext
 
             entity.Property(e => e.TenantName).HasMaxLength(100);
         });
+
+        modelBuilder.Entity<StoreItems>(entity =>
+        {
+            entity.ToTable("InvStoreItems");
+            entity.HasIndex(x => x.TenantId);
+            entity.HasIndex(x => x.BranchId);
+
+            entity.HasKey(e => new { e.StoreId, e.ItemId });
+            entity.Property(e => e.CreatedAt).HasColumnType("timestamp with time zone").ValueGeneratedOnAdd();
+            entity.Property(e => e.LastModified).HasColumnType("timestamp with time zone").ValueGeneratedOnUpdate();
+            entity.Property(e => e.Instock).HasPrecision(6, 1).HasColumnName("Quantity").IsRequired();
+            entity.Property(e => e.UPCNumber).HasColumnName("UPCNumber").HasMaxLength(20);
+            entity.Property(e => e.QuantityDetail).HasColumnType("jsonb");
+            entity.Property(e => e.BranchId).IsRequired();
+            entity.Property(e => e.TenantId).IsRequired();
+        });
+
+        
     }
 }

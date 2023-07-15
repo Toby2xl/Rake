@@ -9,7 +9,7 @@ public class Supplier : Entity<Guid>
     public string Name { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;
     public string Address { get; private set; } = string.Empty;
-    public int TenantId { get; }
+    public int TenantId { get;}
     public int BranchId { get; set; }
     public bool IsActive { get; set; }
     public bool IsoftDeleted { get; set; }

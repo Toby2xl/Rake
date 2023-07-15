@@ -26,6 +26,12 @@ public class Item : Entity<Guid>
 
     public DateTime LastModified { get; set; } = DateTime.UtcNow;
 
+    public ICollection<Warehouse> Warehouse { get; set; } = null!;
+
+    //Holds Items that can be found in different Warehouses ie Many to Many Relationship
+    //between Items and Warehouses.
+    public ICollection<StoreItems> WarehouseItems { get; set; } = null!;
+
     public Item() { } // Used by EfCore........
 
     public Item(string name, string description, string unit, Guid warehouseId,
