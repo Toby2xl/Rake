@@ -1,4 +1,6 @@
+using Inventory.Application.Repository;
 using Inventory.Infrastructure.Data;
+using Inventory.Infrastructure.Repository;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +24,7 @@ namespace Inventory.Infrastructure
             
             // services.AddScoped<IStoreRepo, StoreRepo>();
             // services.AddScoped<ISupplyRepo, SupplyRepo>();
-            // services.AddScoped<ITenantRepo, TenantRepo>();
+             services.AddScoped<ITenantRepo, TenantRepo>();
             // services.AddScoped<ILocationRepo, LocationRepo>();
             // services.AddScoped<ITemsRepo, ItemRepo>();
             // services.AddScoped<ISalesRepo, SalesRepo>();

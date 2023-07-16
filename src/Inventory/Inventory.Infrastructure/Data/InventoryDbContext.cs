@@ -37,10 +37,14 @@ public class InventoryDbContext : DbContext
 
         //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
+        //Creates a case-insesitive collation that doesn't matter whether a string is Lowercase or Uppercase.
+        //Since Postgres database is a case-sensitive Db unlike SqlServer and MySql
+        modelBuilder.HasCollation("case-insensitive", locale:"en-us-ks-primary", provider: "icu", deterministic: false);
+
         modelBuilder.Entity<Branch>(entity =>
         {
             entity.HasKey(e => e.BranchId)
-                .HasName("tbl_Branch_pkey");
+                .HasName("Branch_pkey");
 
             entity.ToTable("Branch");
 
@@ -58,9 +62,14 @@ public class InventoryDbContext : DbContext
         {
             entity.ToTable("Tenants");
 
+            entity.HasIndex( e => e.TenantName).UseCollation("case-insensitive");
+
             entity.Property(e => e.Id)
                 .HasColumnName("ID")
                 .UseIdentityAlwaysColumn();
+
+            //Appended the created collation "case-insensitive" to the TenantName Column.
+            entity.Property(e => e.TenantName).UseCollation("case-insensitive").HasMaxLength(100);
 
             entity.Property(e => e.AmountPaid).HasPrecision(18, 2);
 
@@ -91,7 +100,9 @@ public class InventoryDbContext : DbContext
             entity.HasIndex(e => e.BranchId);
 
             entity.HasKey(e => e.Id);
-            entity.Property(e => e.Name).HasMaxLength(50).IsRequired();
+            entity.Property(e => e.Name).HasMaxLength(50)
+                                        .UseCollation("case-insensitive")
+                                        .IsRequired();
             entity.Property(e => e.TenantId).IsRequired();
             entity.Property(e => e.BranchId).IsRequired();
 
