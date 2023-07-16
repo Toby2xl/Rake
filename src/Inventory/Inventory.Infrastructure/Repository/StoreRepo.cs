@@ -88,7 +88,7 @@ public class StoreRepo : IStoreRepo
         var isItemInStore = await IsItemInStore(storeId, tenantId, branchId);
         if (isItemInStore)
         {
-            _logger.LogInformation("The Store with id {storeId} cannot be deleted, it contains items", storeId);
+            _logger.LogInformation("The Store with id: {storeId} cannot be deleted, it contains items", storeId);
             return (false, $"Store {storeId} is not empty and cannot be deleted");
         }
 
@@ -96,6 +96,22 @@ public class StoreRepo : IStoreRepo
         await _context.SaveChangesAsync(ct);
         _logger.LogInformation("An Empty store with id {storeId} deleted successfully", storeId);
         return (true, "Success");
+    }
+
+    public async Task AdminDeleteAsync(Guid storeId, int tenaantId, int branchId, CancellationToken ct)
+    {
+        var storeToDeleteWithItems = await _context.Warehouses
+                                                   .Include(x => x.StockItems.Where(x => x.TenantId == tenaantId && x.BranchId == branchId))
+                                                   .Include(x => x.WarehouseItems.Where(x => x.StoreId == storeId && x.TenantId == tenaantId && x.BranchId == branchId))
+                                                   .Where(x => x.Id == storeId && x.TenantId == tenaantId && x.BranchId == branchId)
+                                                   .FirstOrDefaultAsync(cancellationToken: ct);
+
+        if (storeToDeleteWithItems is null)
+            return;
+
+        _context.Remove(storeToDeleteWithItems);
+        await _context.SaveChangesAsync(ct);
+        _logger.LogInformation("A store with id {storeId} deleted with its items successfully", storeId);
     }
 
     private async Task<bool> IsItemInStore(Guid storeId, int tenantId, int branchId)

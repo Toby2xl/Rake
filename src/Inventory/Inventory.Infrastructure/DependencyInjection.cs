@@ -21,7 +21,6 @@ namespace Inventory.Infrastructure
                 //options => options.UseNpgsql("Host=162.0.222.79; Port=5432; Username=mystaruser; Password=mystarpostgr; Database=mystardbtest")
             );
 
-            
              services.AddScoped<IStoreRepo, StoreRepo>();
              services.AddScoped<ITenantRepo, TenantRepo>();
             // services.AddScoped<ISupplyRepo, SupplyRepo>();
