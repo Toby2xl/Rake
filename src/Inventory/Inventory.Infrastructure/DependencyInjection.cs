@@ -22,9 +22,9 @@ namespace Inventory.Infrastructure
             );
 
             
-            // services.AddScoped<IStoreRepo, StoreRepo>();
-            // services.AddScoped<ISupplyRepo, SupplyRepo>();
+             services.AddScoped<IStoreRepo, StoreRepo>();
              services.AddScoped<ITenantRepo, TenantRepo>();
+            // services.AddScoped<ISupplyRepo, SupplyRepo>();
             // services.AddScoped<ILocationRepo, LocationRepo>();
             // services.AddScoped<ITemsRepo, ItemRepo>();
             // services.AddScoped<ISalesRepo, SalesRepo>();
