@@ -1,4 +1,5 @@
-using System;
+#if DEBUG //Runs only on Debug mode or in Development.
+using JasperFx.Core;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -8,19 +9,11 @@ namespace Inventory.Infrastructure.Data;
 
 public class SqlDesignTimeDb : IDesignTimeDbContextFactory<InventoryDbContext>
 {
-    private readonly IConfiguration? _config;
-    public SqlDesignTimeDb(IConfiguration config)
-    {
-        _config = config;
-    }
-    public SqlDesignTimeDb(){}
-
     public InventoryDbContext CreateDbContext(string[] args)
     {
         var builder = new DbContextOptionsBuilder<InventoryDbContext>();
         builder.UseNpgsql("Host = localhost; Username = postgres; Password = MCdonald12; Database = Rake-InventoryDB");
-        //builder.UseNpgsql(_config?.GetConnectionString("RakeDbConn"));
-
         return new InventoryDbContext(builder.Options);
     }
 }
+#endif
