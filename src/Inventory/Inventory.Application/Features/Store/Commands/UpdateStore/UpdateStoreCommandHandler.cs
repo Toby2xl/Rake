@@ -19,6 +19,7 @@ namespace Inventory.Application.Features.Store.Commands.UpdateStore
         public async Task<UpdateStoreResponse> Handle(UpdateStoreCommand request, CancellationToken cancellationToken)
         {
             var response = new UpdateStoreResponse();
+            //int tenantId = _tenantService.TenantId;
             int tenantId = 1;
             var storeToUpdate = await _storeRepo.GetWarehouseById(request.StoreId, tenantId, request.BranchId, cancellationToken);
             if (storeToUpdate is null)
