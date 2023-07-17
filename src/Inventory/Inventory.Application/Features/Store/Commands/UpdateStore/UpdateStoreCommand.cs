@@ -1,9 +1,11 @@
 using System;
 using System.Text.Json.Serialization;
 
+using MediatR;
+
 namespace Inventory.Application.Features.Store.Commands.UpdateStore
 {
-    public class UpdateStoreCommand
+    public class UpdateStoreCommand : IRequest<UpdateStoreResponse>
     {
         [JsonIgnore]
        public Guid StoreId {get; set;}
