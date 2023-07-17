@@ -1,6 +1,7 @@
 using System;
 
 using Inventory.Application.Features.Store.Commands.CreateStore;
+using Inventory.Application.Features.Store.Commands.UpdateStore;
 using Inventory.Application.Features.Store.Queries.GetStore;
 using Inventory.Application.Features.Store.Queries.GetStoreList;
 
@@ -49,5 +50,12 @@ public class StoreController : ControllerBase
         var response = await _mediator.Send(request);
         return Results.Ok(response);
     }
-    
+
+    [HttpPut("{storeId:guid}/branch/{branchId:int}")]
+    public async Task<IResult> Update(Guid storeId, int branchId, [FromBody] UpdateStoreCommand command)
+    {
+        command.StoreId = storeId;
+        command.BranchId = branchId;
+        return Results.Ok(await _mediator.Send(command));
+    }
 }
