@@ -1,6 +1,7 @@
 using System;
 
 using Inventory.Application.Features.Store.Commands.CreateStore;
+using Inventory.Application.Features.Store.Commands.DeleteStore;
 using Inventory.Application.Features.Store.Commands.UpdateStore;
 using Inventory.Application.Features.Store.Queries.GetStore;
 using Inventory.Application.Features.Store.Queries.GetStoreList;
@@ -58,4 +59,18 @@ public class StoreController : ControllerBase
         command.BranchId = branchId;
         return Results.Ok(await _mediator.Send(command));
     }
+
+    [HttpDelete("{storeId:guid}/branch/{branchId:int}")]
+    public async Task<IResult> Delete(Guid storeId, int branchId)
+    {
+        return Results.Ok(await _mediator.Send(new DeleteStoreCommand(storeId, branchId)));
+    }
+
+    //Items Section...........
+
+
+
+
+
+
 }

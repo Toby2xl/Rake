@@ -1,6 +1,6 @@
 @tenantName = havard
 @baseAddress = https://localhost:7211/api/{{tenantName}}/Store
-@storeId = 05a63244-1e28-4942-8d3e-45110d2746a3
+@storeId = c175d05a-7f2b-4650-b652-3dcf9cf53ea5
 @branchId = 1
 
 ###
@@ -14,13 +14,25 @@ POST {{baseAddress}}
 Content-Type: application/json
 
 {
-  "name": "Indie App Store",
-  "description": "An app store for Indie developed Applications",
-  "code": "Indie-Code",
-  "address": "Toby dey run am",
-  "branchId": 1
+    "name": "Drake Lead",
+    "description": "Drake con festival",
+    "code": "DR-Rake",
+    "address": "Lagoon Express",
+    "branchId": 1
 }
 
 ### Get list of Stores
 GET {{baseAddress}}/all/branch/{{branchId}}
+
+### Updates a Store
+PUT {{baseAddress}}/{{storeId}}/branch/{{branchId}}
+Content-Type: application/json
+
+{
+    "address": "Toby is good"
+}
+
+### Deletes a Store
+DELETE {{baseAddress}}/{{storeId}}/branch/{{branchId}}
+
 
