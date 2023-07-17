@@ -8,6 +8,7 @@ public class InventoryDbContext : DbContext
 {
     public InventoryDbContext(DbContextOptions options) : base(options)
     {
+        
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

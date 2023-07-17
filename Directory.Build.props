@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>07c28eaf-790d-478f-9580-eb6130e3ac37</UserSecretsId>
 </PropertyGroup>
+
+<ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.8" />
+</ItemGroup>
 </Project>

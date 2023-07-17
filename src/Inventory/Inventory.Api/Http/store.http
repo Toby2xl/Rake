@@ -1,0 +1,17 @@
+@tenantName = havard
+@baseAddress = https://localhost:7211/api/{{tenantName}}/Store
+
+###
+GET  {{baseAddress}}
+
+###
+POST {{baseAddress}}
+Content-Type: application/json
+
+{
+  "name": "Google Play Store",
+  "description": "Android PlayStore build for the Android OS",
+  "code": "G-Play",
+  "address": "Toby built it",
+  "branchId": 1
+}
