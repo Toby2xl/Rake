@@ -1,6 +1,8 @@
 using System;
 
 using Inventory.Application.Features.Store.Commands.CreateStore;
+using Inventory.Application.Features.Store.Queries.GetStore;
+using Inventory.Application.Features.Store.Queries.GetStoreList;
 
 using MediatR;
 
@@ -27,12 +29,19 @@ public class StoreController : ControllerBase
         return Results.Ok("Inventory Store API for Demo Purposes....");
     }
 
-    // [HttpGet("{storeId:guid}/{branchId:int}", Name = "GetStore")]
-    // public async Task<ActionResult> GetStore(Guid storeId, int branchId)
-    // {
-    //     var store = await _mediator.Send(new GetStoreQuery(storeId, branchId));
-    //     return Ok(store);
-    // }
+    [HttpGet("{storeId:guid}/branch/{branchId:int}", Name = "GetStore")]
+    public async Task<IResult> GetStore(Guid storeId, int branchId)
+    {
+        var store = await _mediator.Send(new GetStoreQuery(storeId, branchId));
+        return store is null ? Results.NotFound() : Results.Ok(store);
+    }
+
+    [HttpGet("all/branch/{branchId:int}", Name = "GetAllStores")]
+    public async Task<IResult> GetAllStores(int branchId)
+    {
+        var storesList = await _mediator.Send(new GetStoreListQuery(branchId));
+        return Results.Ok(storesList);
+    }
 
     [HttpPost(Name = "AddWarehouse")]
     public async Task<IResult> Create(CreateStoreCommand request)

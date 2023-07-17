@@ -1,17 +1,26 @@
 @tenantName = havard
 @baseAddress = https://localhost:7211/api/{{tenantName}}/Store
+@storeId = 05a63244-1e28-4942-8d3e-45110d2746a3
+@branchId = 1
 
 ###
 GET  {{baseAddress}}
 
-###
+### Get a SIngle Store
+GET {{baseAddress}}/{{storeId}}/branch/{{branchId}}
+
+### Create a Store
 POST {{baseAddress}}
 Content-Type: application/json
 
 {
-  "name": "Google Play Store",
-  "description": "Android PlayStore build for the Android OS",
-  "code": "G-Play",
+  "name": "Apple Store",
+  "description": "IOS and Mac build for the IOs OS",
+  "code": "Apple-Play",
   "address": "Toby built it",
   "branchId": 1
 }
+
+### Get list of Stores
+GET {{baseAddress}}/all/branch/{{branchId}}
+
