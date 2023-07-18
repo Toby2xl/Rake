@@ -1,5 +1,6 @@
 using Inventory.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Inventory.Infrastructure.Data;
@@ -8,16 +9,11 @@ public class InventoryDbContext : DbContext
 {
     public InventoryDbContext(DbContextOptions options) : base(options)
     {
-        
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder
-                .LogTo(
-                    action: Console.WriteLine,
-                    minimumLevel: LogLevel.Information
-                );
+            optionsBuilder.EnableSensitiveDataLogging(false);
     }
 
     public DbSet<Warehouse> Warehouses { get; set; } = null!;
