@@ -1,6 +1,3 @@
-using System.Data;
-using System;
-
 using MediatR;
 using Inventory.Application.Features.Suppliers.Queries.GetSupplier;
 using Microsoft.AspNetCore.Mvc;
