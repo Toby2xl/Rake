@@ -1,0 +1,39 @@
+@tenantName = havard
+@baseAddress = https://localhost:7211/api/{{tenantName}}/Supplier
+@supplierId = ffd85fb7-75a1-4d16-ab51-67669bf21efa
+@branchId = 1
+
+### Get the default endpoint response
+GET  {{baseAddress}}
+
+### Get a Single SUpplier
+GET {{baseAddress}}/{{supplierId}}/branch/{{branchId}}
+
+### Add a Supplier
+POST {{baseAddress}}
+Content-Type: application/json
+
+{
+    "name": "Drake Supplies Services",
+    "email": "Drake.Vine@gmail.com",
+    "address": "Drake-Lake view avenue",
+    "Phonenumber": "234707778936",
+    "branchId": 1
+}
+
+### Get list of Suppliers
+GET {{baseAddress}}/all/branch/{{branchId}}
+
+### Updates a Store
+PUT {{baseAddress}}/{{supplierId}}/branch/{{branchId}}
+Content-Type: application/json
+
+{
+    "name": "Drake Lead",
+    "email": "Drake.Vine@gmail.com",
+    "phonenumbers": "234707778936",
+    "address": "DR-Rake Lead Avenue."
+}
+
+### Deletes a Store
+DELETE {{baseAddress}}/{{supplierId}}/branch/{{branchId}}

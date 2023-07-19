@@ -1,0 +1,5 @@
+{
+    "editor.indentSize": "tabSize",
+    "terminal.integrated.tabs.defaultColor": "terminal.ansiGreen",
+    "razor.languageServer.debug": false
+}

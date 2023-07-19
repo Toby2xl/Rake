@@ -29,7 +29,10 @@ PUT {{baseAddress}}/{{storeId}}/branch/{{branchId}}
 Content-Type: application/json
 
 {
-    "address": "Toby is good"
+    "name": "Drake Lead",
+    "description": "Toby is awesome",
+    "code": "DR-Rake",
+    "address": "Lagoon Express",
 }
 
 ### Deletes a Store

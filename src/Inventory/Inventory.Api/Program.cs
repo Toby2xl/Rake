@@ -3,9 +3,14 @@ using Inventory.Infrastructure;
 
 using Microsoft.AspNetCore.HttpOverrides;
 
+using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
+
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
+Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Information().WriteTo.Console(theme: AnsiConsoleTheme.Code).CreateLogger();
 // Add services to the container.
 builder.Services.AddControllers();
 
@@ -16,6 +21,8 @@ builder.Services.AddApplication();
 builder.Services.AddInfrastructure(configuration);
 builder.Services.AddCors();
 
+builder.Host.UseSerilog();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,6 +32,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
 // app.UseForwardedHeaders(new ForwardedHeadersOptions

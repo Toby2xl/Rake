@@ -13,7 +13,7 @@ public class InventoryDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-            optionsBuilder.EnableSensitiveDataLogging(false);
+            optionsBuilder.EnableSensitiveDataLogging();
     }
 
     public DbSet<Warehouse> Warehouses { get; set; } = null!;
