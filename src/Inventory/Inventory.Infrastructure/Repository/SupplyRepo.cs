@@ -16,7 +16,8 @@ public class SupplyRepo : ISupplyRepo
     }
     public async Task<bool> AddSupplierAsync(Supplier supplier, CancellationToken ct)
     {
-        if (await _context.Suppliers.AnyAsync(x => x.Name == supplier.Name &&
+        var supplierName = supplier.Name.ToLower();
+        if (await _context.Suppliers.AnyAsync(x => x.Name.ToLower() == supplierName &&
                                               x.TenantId == supplier.TenantId &&
                                               x.BranchId == supplier.BranchId, ct))
         {

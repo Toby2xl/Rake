@@ -20,7 +20,8 @@ public class TenantRepo : ITenantRepo
 
     public int GetTenantIdByName(string tenantName)
     {
-        var tenant = _context.Tenants.Where(x => string.Equals(x.TenantName, tenantName)).SingleOrDefault();
+        var name = tenantName.ToLower();
+        var tenant = _context.Tenants.Where(x => string.Equals(x.TenantName.ToLower(), name)).SingleOrDefault();
         return tenant == null ? -1 : tenant.Id;
     }
 

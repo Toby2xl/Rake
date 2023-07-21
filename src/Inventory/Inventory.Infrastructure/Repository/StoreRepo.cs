@@ -20,8 +20,9 @@ public class StoreRepo : IStoreRepo
     }
     public async Task<bool> AddWarehouseAsync(Warehouse store, CancellationToken ct)
     {
+        var storeName = store.Name.ToLower();
         if (await _context.Warehouses
-                                .AnyAsync(x => x.Name == store.Name &&
+                                .AnyAsync(x => string.Equals(x.Name.ToLower(), storeName) &&
                                                 x.TenantId == store.TenantId &&
                                                 x.BranchId == store.BranchId, cancellationToken: ct))
         {

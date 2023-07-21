@@ -1,6 +1,6 @@
 @tenantName = havard
 @baseAddress = https://localhost:7211/api/{{tenantName}}/Store
-@storeId = acbc9e49-d056-4f81-bb9c-58b9d87f89c6
+@storeId = 3097a309-0e9c-4705-8c7a-152298eeb171
 @branchId = 1
 
 ###
@@ -14,7 +14,7 @@ POST {{baseAddress}}
 Content-Type: application/json
 
 {
-    "name": "Drake Lead",
+    "name": "DRAkE LEaD",
     "description": "Drake con festival",
     "code": "DR-Rake",
     "address": "Lagoon Express",
