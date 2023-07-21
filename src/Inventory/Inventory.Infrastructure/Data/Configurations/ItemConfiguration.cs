@@ -17,7 +17,7 @@ namespace Inventory.Infrastructure.Data.Configurations
 
             builder.HasKey(x => x.Id);
             builder.Property(x => x.SN).ValueGeneratedOnAdd().HasColumnName("SN").UseIdentityAlwaysColumn();
-            builder.Property(x => x.Name).HasMaxLength(150).IsRequired();
+            builder.Property(x => x.Name).HasMaxLength(150).UseCollation("case-insensitive").IsRequired();
             builder.Property(x => x.Description).HasMaxLength(350);
             builder.Property(x => x.TenantId).IsRequired();
             builder.Property(x => x.Unit).HasColumnName("Unit");

@@ -1,6 +1,6 @@
 @tenantName = havard
 @baseAddress = https://localhost:7211/api/{{tenantName}}/Supplier
-@supplierId = 0c3709e9-c191-42d7-a7c1-f2cb11deefd1
+@supplierId = 4d90e9e5-35e5-4197-8dce-b610df5416a2
 @branchId = 1
 
 ### Get the default endpoint response
@@ -14,7 +14,7 @@ POST {{baseAddress}}
 Content-Type: application/json
 
 {
-    "name": "Drake Supplies Services",
+    "name": "drake supplies services",
     "email": "Drake.Vine@gmail.com",
     "address": "Drake-Lake view avenue",
     "Phonenumber": "234707778936",

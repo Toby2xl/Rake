@@ -13,11 +13,11 @@ public class SupplierConfiguration : IEntityTypeConfiguration<Supplier>
     {
         builder.ToTable("InvSupplier");
         builder.HasIndex(x => x.TenantId);
-        builder.HasIndex(x => x.Name);
+        builder.HasIndex(x => x.Name).UseCollation("case-insensitive");
         builder.HasIndex(x => x.BranchId);
 
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Name).HasMaxLength(250).IsRequired();
+        builder.Property(x => x.Name).HasMaxLength(250).UseCollation("case-insensitive").IsRequired();
         builder.Property(x => x.Email).HasMaxLength(300).IsRequired();
         builder.Property(x => x.Address).HasMaxLength(350).IsRequired();
         builder.Property(x => x.TenantId).IsRequired();
