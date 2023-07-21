@@ -1,6 +1,6 @@
 @tenantName = havard
 @baseAddress = https://localhost:7211/api/{{tenantName}}/Supplier
-@supplierId = ffd85fb7-75a1-4d16-ab51-67669bf21efa
+@supplierId = 0c3709e9-c191-42d7-a7c1-f2cb11deefd1
 @branchId = 1
 
 ### Get the default endpoint response

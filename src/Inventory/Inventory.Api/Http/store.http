@@ -1,6 +1,6 @@
 @tenantName = havard
 @baseAddress = https://localhost:7211/api/{{tenantName}}/Store
-@storeId = c175d05a-7f2b-4650-b652-3dcf9cf53ea5
+@storeId = acbc9e49-d056-4f81-bb9c-58b9d87f89c6
 @branchId = 1
 
 ###
@@ -37,5 +37,3 @@ Content-Type: application/json
 
 ### Deletes a Store
 DELETE {{baseAddress}}/{{storeId}}/branch/{{branchId}}
-
-

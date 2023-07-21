@@ -1,5 +1,8 @@
 {
     "editor.indentSize": "tabSize",
     "terminal.integrated.tabs.defaultColor": "terminal.ansiGreen",
-    "razor.languageServer.debug": false
+    "razor.languageServer.debug": false,
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "files.insertFinalNewline": false
 }
