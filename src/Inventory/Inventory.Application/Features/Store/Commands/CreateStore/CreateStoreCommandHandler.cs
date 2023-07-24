@@ -21,10 +21,9 @@ public class CreateStoreCommandHandler : IRequestHandler<CreateStoreCommand, Cre
     public async Task<CreateStoreResponse> Handle(CreateStoreCommand request, CancellationToken cancellationToken)
     {
         var response = new CreateStoreResponse();
-        // int tenantId = _tenantService.TenantId == 0 ? 1 : 1;
-        const int tenantId = 1;
+        int tenantId = _tenantService.TenantId;
         int branchId = request.BranchId;
-        
+
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);
         if (validationResult.Errors.Count > 0)
         {

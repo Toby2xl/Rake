@@ -21,7 +21,7 @@ public class UpdateSupplyHandler : IRequestHandler<UpdateSupplier, UpdateSupplyR
     }
     public async Task<UpdateSupplyResponse> Handle(UpdateSupplier request, CancellationToken cancellationToken)
     {
-        int tenantId = 1; //_tenantService.TenantId;
+        int tenantId = _tenantService.TenantId;
         int branchId = request.BranchId;
         var response = new UpdateSupplyResponse();
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);

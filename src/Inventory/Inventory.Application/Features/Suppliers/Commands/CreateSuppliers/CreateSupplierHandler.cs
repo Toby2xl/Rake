@@ -23,7 +23,7 @@ public class CreateSupplierHandler : IRequestHandler<CreateSupplierCommand, Crea
     }
     public async Task<CreateSupplyResponse> Handle(CreateSupplierCommand request, CancellationToken cancellationToken)
     {
-        const int tenantId =  1; //_tenantService.TenantId;
+        int tenantId = _tenantService.TenantId;
         int branchId = request.BranchId;
         var response = new CreateSupplyResponse();
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);

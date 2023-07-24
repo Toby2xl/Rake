@@ -23,8 +23,7 @@ namespace Inventory.Application.Features.Store.Commands.UpdateStore
         public async Task<UpdateStoreResponse> Handle(UpdateStoreCommand request, CancellationToken cancellationToken)
         {
             var response = new UpdateStoreResponse();
-            //int tenantId = _tenantService.TenantId;
-            const int tenantId = 1;
+            int tenantId = _tenantService.TenantId;
 
             var validationResult = await _validator.ValidateAsync(request, cancellationToken);
             if (validationResult.Errors.Count > 0)

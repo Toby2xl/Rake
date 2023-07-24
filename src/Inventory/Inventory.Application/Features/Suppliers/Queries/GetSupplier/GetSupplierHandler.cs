@@ -19,7 +19,7 @@ public class GetSupplierHandler : IRequestHandler<GetSupplierQuery, SupplierDto>
     }
     public async Task<SupplierDto> Handle(GetSupplierQuery request, CancellationToken cancellationToken)
     {
-        int tenantId = 1; //_tenantService.TenantId;
+        int tenantId = _tenantService.TenantId;
         int branchId = request.BranchId;
         var supplier = await _supplyRepo.GetSupplierById(request.SupplierId, tenantId, branchId, cancellationToken);
 

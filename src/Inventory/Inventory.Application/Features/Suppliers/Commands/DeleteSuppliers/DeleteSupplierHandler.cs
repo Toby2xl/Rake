@@ -20,7 +20,7 @@ public class DeleteSupplierHandler : IRequestHandler<DeleteSupplier, DeleteSuppl
     }
     public async Task<DeleteSupplyResponse> Handle(DeleteSupplier request, CancellationToken cancellationToken)
     {
-        int tenantId = 1;//_tenantService.TenantId;
+        int tenantId = _tenantService.TenantId;
         int branchId = request.BranchId;
         Guid supplierId = request.SupplierId;
         var response = new DeleteSupplyResponse();

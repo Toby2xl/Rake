@@ -1,3 +1,4 @@
+using Inventory.Api.Services.Middleware;
 using Inventory.Application;
 using Inventory.Infrastructure;
 
@@ -34,7 +35,7 @@ if (app.Environment.IsDevelopment())
 
 //app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
-
+app.UseTenantHandler();
 // app.UseForwardedHeaders(new ForwardedHeadersOptions
 // {
 //     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto

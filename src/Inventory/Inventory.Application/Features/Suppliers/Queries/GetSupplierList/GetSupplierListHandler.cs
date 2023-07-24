@@ -18,7 +18,7 @@ namespace Inventory.Application.Features.Suppliers.Queries.GetSupplierList
         }
         public async Task<SupplierListResponse> Handle(GetSupplierList request, CancellationToken cancellationToken)
         {
-            int tenantId = 1;//_tenantService.TenantId;
+            int tenantId = _tenantService.TenantId;
             int branchId = request.BranchId;
             var response = new SupplierListResponse();
 

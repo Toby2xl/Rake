@@ -19,7 +19,7 @@ public class DeleteStoreCommandHandler : IRequestHandler<DeleteStoreCommand, Del
     public async Task<DeleteResponse> Handle(DeleteStoreCommand request, CancellationToken cancellationToken)
     {
         var response = new DeleteResponse();
-        int tenantId = 1;
+        int tenantId = _tenantService.TenantId;
         var storeToDelete = await _storeRepo.GetWarehouseById(request.StoreId, tenantId, request.BranchId, cancellationToken);
         if (storeToDelete is null)
         {
@@ -31,7 +31,7 @@ public class DeleteStoreCommandHandler : IRequestHandler<DeleteStoreCommand, Del
         }
 
         var (isStoreEmpty, message) = await _storeRepo.DeleteAsync(storeToDelete, cancellationToken);
-        
+
         if (!isStoreEmpty)
         {
             response.Success = isStoreEmpty;

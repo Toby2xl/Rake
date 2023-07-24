@@ -22,8 +22,7 @@ public class GetStoreQueryHandler : IRequestHandler<GetStoreQuery, StoreDto>
     }
     public async Task<StoreDto> Handle(GetStoreQuery request, CancellationToken cancellationToken)
     {
-        //int tenantId = _tenantService.TenantId;
-        int tenantId = 1; //Remove after implementing TenantService
+        int tenantId = _tenantService.TenantId;
         int branchId = request.BranchId;
         var warehouse = await _storeRepo.GetWarehouseById(request.StoreId, tenantId, branchId, cancellationToken);
 
