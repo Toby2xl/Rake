@@ -1,17 +1,23 @@
-@tenantName = havard
+@tenantName = toby
 @baseAddress = https://localhost:7211/api/{{tenantName}}/Supplier
-@supplierId = 7f11f947-81e5-4f6e-81a9-62a3f7835bb5
+@supplierId = 22e7edd7-ac02-4504-958f-564a2eaceabb
 @branchId = 1
 
 ### Get the default endpoint response
 GET  {{baseAddress}}
+Content-Type: application/json
+X-Tenant: {{tenantName}}
 
 ### Get a Single SUpplier
 GET {{baseAddress}}/{{supplierId}}/branch/{{branchId}}
+Content-Type: application/json
+X-Tenant: {{tenantName}}
+
 
 ### Add a Supplier
 POST {{baseAddress}}
 Content-Type: application/json
+X-Tenant: {{tenantName}}
 
 {
     "name": "Drake Supplies services",
@@ -24,7 +30,7 @@ Content-Type: application/json
 ### Get list of Suppliers
 GET {{baseAddress}}/all/branch/{{branchId}}
 Content-Type: application/json
-X-Tenant:  havard
+X-Tenant: {{tenantName}}
 
 
 ### Updates a Store
@@ -40,3 +46,5 @@ Content-Type: application/json
 
 ### Deletes a Store
 DELETE {{baseAddress}}/{{supplierId}}/branch/{{branchId}}
+Content-Type: application/json
+X-Tenant: {{tenantName}}
