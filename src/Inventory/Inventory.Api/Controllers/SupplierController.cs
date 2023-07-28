@@ -36,7 +36,7 @@ public class SupplierController : ControllerBase
     public async Task<IResult> GetAllSuppliers(int branchId)
     {
         var supplierList = await _mediator.Send(new GetSupplierList(branchId));
-        return Results.Ok(supplierList);
+        return !supplierList.Data!.Any() ? Results.NotFound(supplierList) : Results.Ok(supplierList);
     }
 
     [HttpPost(Name = "AddSupplier")]

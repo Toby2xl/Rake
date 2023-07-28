@@ -23,6 +23,9 @@ Content-Type: application/json
 
 ### Get list of Suppliers
 GET {{baseAddress}}/all/branch/{{branchId}}
+Content-Type: application/json
+X-Tenant:  havard
+
 
 ### Updates a Store
 PUT {{baseAddress}}/{{supplierId}}/branch/{{branchId}}
