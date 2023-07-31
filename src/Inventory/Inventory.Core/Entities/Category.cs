@@ -19,7 +19,7 @@ public class Category : Entity<int>
 
     /*
         From the Service in the Application Layer {IsCategoryExistsAsync()},
-        Check if the Category exists and asssign the 
+        Check if the Category exists and asssign the
 
     */
 }

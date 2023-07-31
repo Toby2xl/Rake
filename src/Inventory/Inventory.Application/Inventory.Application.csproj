@@ -22,4 +22,10 @@
     <ProjectReference Include="..\Inventory.Core\Inventory.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Item\Commands\DeleteItem\" />
+    <Folder Include="Features\Item\Commands\UpdateItem\" />
+    <Folder Include="Features\Item\Query\" />
+  </ItemGroup>
+
 </Project>
