@@ -18,6 +18,7 @@ public static class DependencyInjection
         services.AddValidatorsFromAssembly(assembly);
         //services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly()); <-- if there's conflict, use this instead....
         services.AddScoped<ITenantService, TenantService>();
+        services.AddScoped< ICategoryService, CategoryService>();
         return services;
     }
 }

@@ -73,11 +73,28 @@ public class Item : Entity<Guid>
         //Category.Name = categoryName;
     }
 
+    public void AddNewCategory(string categoryName)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(categoryName);
+        Category = new()
+        {
+            Name = categoryName.ToLower(),
+            TenantId = TenantId,
+            BranchId = BranchId
+        };
+    }
+
+    public void AppendExistingCategory(int categoryId)
+    {
+        //check whether its not null....
+        CategoryID = categoryId;
+    }
+
     // Soft Delete an Item by Setting its IsoftDeleted property to true........
     public void SoftDelete()
     {
         IsoftDeleted = true;
     }
     // Update/Change the Name of an Item......
-    // Get the Total Quantity of an Item, if Item is available............. 
+    // Get the Total Quantity of an Item, if Item is available.............
 }
