@@ -1,4 +1,4 @@
-@tenantName = toby
+@tenantName = havard
 @baseAddress = https://localhost:7211/api/{{tenantName}}/Supplier
 @supplierId = 22e7edd7-ac02-4504-958f-564a2eaceabb
 @branchId = 1

@@ -20,8 +20,8 @@ namespace Inventory.Infrastructure
              services.AddScoped<IStoreRepo, StoreRepo>();
              services.AddScoped<ITenantRepo, TenantRepo>();
              services.AddScoped<ISupplyRepo, SupplyRepo>();
+             services.AddScoped<ITemsRepo, ItemRepo>();
             // services.AddScoped<ILocationRepo, LocationRepo>();
-            // services.AddScoped<ITemsRepo, ItemRepo>();
             // services.AddScoped<ISalesRepo, SalesRepo>();
             // services.AddScoped<IOrderRepo, OrderRepo>();
             // services.AddScoped<IStockRepo, StockRepo>();

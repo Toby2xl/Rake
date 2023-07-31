@@ -58,9 +58,9 @@ public class CreateItemHandler : IRequestHandler<CreateItemCommand, CreateItemRe
         {
             newCreatedItem.AddNewCategory(request.CategoryName);
         }
-        
+
         //Append the QunatityDetails to the ItemDto
-        var  createdItemToAdd = CreateItemToAdd(newCreatedItem, request.QtyDetails);
+        var  createdItemToAdd = CreateItemToAdd(newCreatedItem, request.Quantity, request.QtyDetails);
 
         var (isSuccess, created) = await _itemsRepo.AddStockItemAsync(createdItemToAdd);
         if(!isSuccess && created is not null)
@@ -78,18 +78,19 @@ public class CreateItemHandler : IRequestHandler<CreateItemCommand, CreateItemRe
             return response;
         }
         var createItem = new CreateItemDto(created!.Id, created.Name, created.CostPrice,
-                                           created.Quantity, created.UnitPrice, created.IsForSale,created.CategoryName,
+                                           created.Quantity, created.UnitPrice, created.IsForSale, request.CategoryName,
                                             created.UPCNumber,created.Message);
         response.Data = createItem;
         response.Message = "Item Created successfully....";
         return response;
     }
 
-    private static ItemDto CreateItemToAdd(Item newItem, QuantityDetails qtyDetails)
+    private static ItemDto CreateItemToAdd(Item newItem, decimal quantity, QuantityDetails qtyDetails)
     {
         return new ItemDto
         {
             NewItem = newItem,
+            Quantity = quantity,
             QuantityDetails = qtyDetails
         };
     }
