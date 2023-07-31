@@ -12,7 +12,7 @@ public class CreateItemValidation : AbstractValidator<CreateItemCommand>
 
         RuleFor(p => p.Unit)
                   .NotEmpty().WithMessage("The {PropertyName} is required.")
-                  .Must(c => c.Length <= 8).WithMessage("The {PropertyName} must not exceed 5 characters")
+                  .Must(c => c.Length <= 5).WithMessage("The {PropertyName} must not exceed 5 characters")
                   .NotNull();
 
         RuleFor(p => p.Quantity)
