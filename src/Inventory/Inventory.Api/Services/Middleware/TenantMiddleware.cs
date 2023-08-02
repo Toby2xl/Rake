@@ -34,19 +34,18 @@ public class TenantMiddleware
         }
         tenantService.SetTenant(tenant!);
 
-        var tenantHeaderValue = context.Request.Headers.TryGetValue("X-Tenant", out var headerValue);
-        if(!tenantHeaderValue)
-        {
-            await context.Response.WriteAsync("No Tenant Name specified in the header");
-            return;
-        }
-        //var authheader = context.Request.Headers[HeaderNames.Authorization];
-        var headerTenant = headerValue.ToString().Trim();
-        if (!string.Equals(tenant, headerTenant, StringComparison.OrdinalIgnoreCase))
-        {
-            await context.Response.WriteAsJsonAsync(new {message = "Tenant names mismatch", statusCode = HttpStatusCode.BadRequest});
-            return;
-        }
+        // var tenantHeaderValue = context.Request.Headers.TryGetValue("X-Tenant", out var headerValue);
+        // if(!tenantHeaderValue)
+        // {
+        //     await context.Response.WriteAsJsonAsync(new { message = "No valid Tenant name specified in the header", statusCode =HttpStatusCode.BadRequest});
+        //     return;
+        // }
+        // var headerTenant = headerValue.ToString().Trim();
+        // if (!string.Equals(tenant, headerTenant, StringComparison.OrdinalIgnoreCase))
+        // {
+        //     await context.Response.WriteAsJsonAsync(new {message = "Tenant names mismatch", statusCode = HttpStatusCode.BadRequest});
+        //     return;
+        // }
 
         await _next(context);
         _logger.LogInformation("Tenant Identifier obtained.....{tenantServiceName} with Tenant Id of {tenantServiceId}", tenantService.Tenant, tenantService.TenantId);

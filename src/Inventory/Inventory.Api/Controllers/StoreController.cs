@@ -1,5 +1,4 @@
-using System;
-
+using Inventory.Application;
 using Inventory.Application.Features.Store.Commands.CreateStore;
 using Inventory.Application.Features.Store.Commands.DeleteStore;
 using Inventory.Application.Features.Store.Commands.UpdateStore;
@@ -8,7 +7,6 @@ using Inventory.Application.Features.Store.Queries.GetStoreList;
 
 using MediatR;
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inventory.Api.Controllers;
@@ -67,7 +65,19 @@ public class StoreController : ControllerBase
     }
 
     //Items Section...........
+    // [HttpGet("{storeId:guid}/item/{itemId:guid}/{branchId:int}", Name = "GetItem")]
+    // public async Task<ActionResult> GetItem(Guid storeId, Guid itemId, int branchId)
+    // {
+    //     var item = await _mediator.Send(new GetItemQuery(itemId, storeId, branchId));
+    //     return Ok(item);
+    // }
 
+    [HttpPost("item", Name = "AddItem")]
+    public async Task<IResult> CreateItem(CreateItemCommand request)
+    {
+        var response = await _mediator.Send(request);
+        return Results.Ok(response);
+    }
 
 
 

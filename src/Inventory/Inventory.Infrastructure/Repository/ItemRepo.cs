@@ -22,9 +22,10 @@ public class ItemRepo : ITemsRepo
         var itemName = newItemDto.NewItem.Name.ToLower();
         int tenantId = newItemDto.NewItem.TenantId;
         int branchId = newItemDto.NewItem.BranchId;
+        var storeId = newItemDto.NewItem.WarehouseId;
         try
         {
-            if (await _context.Items.AnyAsync(x => x.Name.ToLower() == itemName && x.TenantId == tenantId && x.BranchId == branchId))
+            if (await _context.Items.AnyAsync(x => x.WarehouseId == storeId && x.Name.ToLower() == itemName && x.TenantId == tenantId && x.BranchId == branchId))
             {
                 return (false, new ItemCreated
                 {
@@ -32,20 +33,11 @@ public class ItemRepo : ITemsRepo
                 });
             }
             //construct the join table
-            var storeItem = new StoreItems
-            {
-                StoreId = newItemDto.NewItem.WarehouseId!.Value,
-                ItemId = newItemDto.NewItem.Id,
-                TenantId = tenantId,
-                BranchId = branchId,
-                Instock = newItemDto.Quantity,
-                UPCNumber = newItemDto.NewItem.UPCNumber,
-                QuantityDetail = newItemDto.QuantityDetails
+            var storeItem = CreateStoreItems(newItemDto, tenantId, branchId);
 
-            };
             await _context.AddRangeAsync(newItemDto.NewItem, storeItem);
             await _context.SaveChangesAsync();
-            
+
             return (true, new ItemCreated
             {
                 Id = newItemDto.NewItem.Id,
@@ -63,6 +55,21 @@ public class ItemRepo : ITemsRepo
             _logger.LogCritical("Item Add Error:=> {e}", e.Message);
             return (false, default!);
         }
+    }
+
+    private static StoreItems CreateStoreItems(ItemDto newItemDto, int tenantId, int branchId)
+    {
+        return new StoreItems
+        {
+            StoreId = newItemDto.NewItem.WarehouseId!.Value,
+            ItemId = newItemDto.NewItem.Id,
+            TenantId = tenantId,
+            BranchId = branchId,
+            Instock = newItemDto.Quantity,
+            UPCNumber = newItemDto.NewItem.UPCNumber,
+            QuantityDetail = newItemDto.QuantityDetails
+
+        };
     }
 
     public async Task<(bool, int)> CategoryExistAsync(string name, int tenantId, int branchId)
