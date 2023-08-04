@@ -90,7 +90,7 @@ public class StoreRepo : IStoreRepo
         if (isItemInStore)
         {
             _logger.LogInformation("The Store with id: {storeId} cannot be deleted, it contains items", storeId);
-            return (false, $"Store {storeId} is not empty and cannot be deleted");
+            return (false, $"The warehouse {entity.Name} is not empty and cannot be deleted");
         }
 
         _context.Set<Warehouse>().Remove(entity);

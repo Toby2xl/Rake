@@ -1,0 +1,6 @@
+@tenantName = havard
+@baseAddress = https://localhost:7200/api/{{tenantName}}/Store/item
+@branchId = 1
+
+###
+GET  {{baseAddress}}

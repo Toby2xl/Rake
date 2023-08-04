@@ -1,6 +1,6 @@
 @tenantName = havard
-@baseAddress = https://localhost:7211/api/{{tenantName}}/Store
-@storeId = 3097a309-0e9c-4705-8c7a-152298eeb171
+@baseAddress = https://localhost:7200/api/{{tenantName}}/Store
+@storeId = 63ca7117-c4f5-4b0f-9ac2-4732dcb9639e
 @branchId = 1
 
 ###
