@@ -83,4 +83,18 @@ public class ItemRepo : ITemsRepo
         var categoryId = category.Id;
         return (true, categoryId);
     }
+    public async Task<Item> GetItemByIdAsync(Guid itemId, int tenantId, int branchId, CancellationToken ct)
+    {
+        var item = await _context.Items.Where(x => x.Id == itemId &&
+                                             x.TenantId == tenantId && x.BranchId == branchId).SingleOrDefaultAsync(ct);
+        return item is not null ? item : default!;
+    }
+
+    public async Task<IReadOnlyList<Item>> GetAllStockItemByStoreAsync(Guid storeId, int tenantId, int branchId, CancellationToken ct)
+    {
+        var items = await _context.Items
+                                    .Where(x => x.WarehouseId == storeId
+                                        && x.TenantId == tenantId && x.BranchId == branchId).ToListAsync(ct);
+        return items;
+    }
 }
