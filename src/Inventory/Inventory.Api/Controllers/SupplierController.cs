@@ -36,14 +36,14 @@ public class SupplierController : ControllerBase
     public async Task<IResult> GetAllSuppliers(int branchId)
     {
         var supplierList = await _mediator.Send(new GetSupplierList(branchId));
-        return !supplierList.Data!.Any() ? Results.NotFound(supplierList) : Results.Ok(supplierList);
+        return !supplierList.Success ? Results.NotFound(supplierList) : Results.Ok(supplierList);
     }
 
     [HttpPost(Name = "AddSupplier")]
     public async Task<IResult> Create([FromBody] CreateSupplierCommand request)
     {
         var response = await _mediator.Send(request);
-        return Results.Ok(response);
+        return response.Success ? Results.Ok(response) : Results.BadRequest(response);
     }
 
     [HttpPut("{supplierId:guid}/branch/{branchId:int}")]
@@ -54,15 +54,15 @@ public class SupplierController : ControllerBase
             SupplierId = supplierId,
             BranchId = branchId
         };
-        var result = await _mediator.Send(updateSupplier);
+        var response = await _mediator.Send(updateSupplier);
 
-        return result.Data is null ? Results.NotFound(result) : Results.Ok(result);
+        return !response.Success ? Results.NotFound(response) : Results.Ok(response);
     }
 
     [HttpDelete("{supplierId:guid}/branch/{branchId:int}")]
     public async Task<IResult> Delete(Guid supplierId, int branchId)
     {
-        var result = await _mediator.Send(new DeleteSupplier(supplierId, branchId));
-        return result.Data is null ? Results.NotFound(result) : Results.Ok();
+        var response= await _mediator.Send(new DeleteSupplier(supplierId, branchId));
+        return !response.Success ? Results.NotFound(response) : Results.Ok();
     }
 }

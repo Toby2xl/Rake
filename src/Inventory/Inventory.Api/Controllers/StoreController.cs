@@ -1,4 +1,6 @@
 using Inventory.Application;
+using Inventory.Application.Features.Item.Commands.DeleteItem;
+using Inventory.Application.Features.Item.Commands.UpdateItem;
 using Inventory.Application.Features.Store.Commands.CreateStore;
 using Inventory.Application.Features.Store.Commands.DeleteStore;
 using Inventory.Application.Features.Store.Commands.UpdateStore;
@@ -40,14 +42,14 @@ public class StoreController : ControllerBase
     public async Task<IResult> GetAllStores(int branchId)
     {
         var storesList = await _mediator.Send(new GetStoreListQuery(branchId));
-        return Results.Ok(storesList);
+        return storesList.Count > 0 ? Results.Ok(storesList) : Results.NotFound(storesList);
     }
 
     [HttpPost(Name = "AddWarehouse")]
     public async Task<IResult> Create(CreateStoreCommand request)
     {
         var response = await _mediator.Send(request);
-        return Results.Ok(response);
+        return response.Success ? Results.Ok(response) : Results.BadRequest(response);
     }
 
     [HttpPut("{storeId:guid}/branch/{branchId:int}")]
@@ -76,11 +78,26 @@ public class StoreController : ControllerBase
     public async Task<IResult> CreateItem(CreateItemCommand request)
     {
         var response = await _mediator.Send(request);
-        return Results.Ok(response);
+        return response.Success ? Results.Ok(response) : Results.BadRequest(response);
     }
 
+    [HttpDelete("{storeId:guid}/item/{itemId:guid}/branch/{branchId:int}")]
+    public async Task<IResult> DeleteItem(Guid itemId, Guid storeId, int branchId)
+    {
+        var response = await _mediator.Send(new DeleteItemCommand(itemId, storeId, branchId));
 
+        return response.Success ? Results.Ok(response) : Results.BadRequest(response);
+    }
 
+    [HttpPut("{storeId:guid}/item/{itemId:guid}/{branchId:int}")]
+    public async Task<IResult> UpdateItem(Guid storeId, Guid itemId, int branchId, [FromBody] UpdateItemCommand command)
+    {
+        command.ItemId = itemId;
+        command.BranchId = branchId;
+        command.StoreId = storeId;
+        var response = await _mediator.Send(command);
+        return response.Success ? Results.Ok(response) : Results.BadRequest(response);
+    }
 
 
 }

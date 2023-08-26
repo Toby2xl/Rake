@@ -1,4 +1,5 @@
 ﻿using Inventory.Application;
+using Inventory.Application.DbDto;
 using Inventory.Application.Repository;
 using Inventory.Core.Entities;
 using Inventory.Infrastructure.Data;
@@ -96,5 +97,47 @@ public class ItemRepo : ITemsRepo
                                     .Where(x => x.WarehouseId == storeId
                                         && x.TenantId == tenantId && x.BranchId == branchId).ToListAsync(ct);
         return items;
+    }
+
+    public async Task DeleteAsync(ItemDeleteDto entity, CancellationToken ct)
+    {
+        int tenantId = entity.TenantId;
+        int branchId = entity.BranchId;
+        Guid storeId = entity.StoreId;
+        Guid itemId = entity.ItemId;
+        // WarehouseItems == StoreItems - the join table between warehouse and Items.
+        var itemToDelete = await _context.Items
+                                               .Include(x => x.WarehouseItems
+                                                        .Where(x => x.StoreId == storeId &&
+                                                                    x.ItemId == itemId &&
+                                                                    x.TenantId == tenantId && x.BranchId == branchId))
+                                               .Where(x => x.Id == itemId && x.TenantId == tenantId && x.BranchId == branchId).FirstOrDefaultAsync(ct);
+
+        _context.Remove(itemToDelete!);
+        await _context.SaveChangesAsync(ct);
+    }
+
+    public async Task UpdateItemAsync(ItemUpdateDto entity, int tenantId, int branchId, CancellationToken ct)
+    {
+        var itemId = entity.ItemId;
+        var storeId = entity.StoreId;
+        int categoryName = entity.CategoryId;
+        var itemToUpdate = await _context.Items.Where(x => x.Id == itemId &&
+                                                      x.TenantId == tenantId && x.BranchId == branchId)
+                                                      .FirstOrDefaultAsync(ct);
+
+        itemToUpdate!.UpdateItems(entity.Name, entity.Unit,
+                                 entity.CostPrice, entity.IsForSale,
+                                 entity.UnitPrice, entity.CategoryId);
+
+        var storeItems = await _context.StoreItems
+                                                .Include(x => x.Item)
+                                                .Where(x => x.StoreId == storeId && x.ItemId == itemId
+                                                     && x.TenantId == tenantId && x.BranchId == branchId).FirstOrDefaultAsync();
+
+        storeItems!.Instock = entity.Quantity;
+        storeItems.Item = itemToUpdate;
+        _context.Update(storeItems);
+        await _context.SaveChangesAsync(ct);
     }
 }

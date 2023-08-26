@@ -63,14 +63,14 @@ public class Item : Entity<Guid>
 
     */
 
-    public void UpdateItems(string name, string unit, decimal costPrice, bool forSale, decimal unitPrice)
+    public void UpdateItems(string name, string unit, decimal costPrice, bool forSale, decimal unitPrice, int categoryId)
     {
         Name = name;
         Unit = unit;
         CostPrice = costPrice;
         IsForSale = forSale;
         Price = forSale ? unitPrice : 0.00M;
-        //Category.Name = categoryName;
+        CategoryID = categoryId;
     }
 
     public void AddNewCategory(string categoryName)
