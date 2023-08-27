@@ -175,4 +175,47 @@ public class ItemRepo : ITemsRepo
                                                 .SingleOrDefaultAsync();
         return item is not null ? item : default;
     }
+
+    public async Task<(int, IReadOnlyList<SelectedItem>)> GetAllItemByStoreAsync(Guid storeId, int tenantId, int branchId, int cursor, int pageSize, CancellationToken ct)
+    {
+        try
+        {
+            //TODO: Add pagination here, if all is well..... KeySet Pagination
+            var ItemsList = await _context.Items.AsNoTracking()
+                                        .Where(x => x.WarehouseId == storeId
+                                            && x.TenantId == tenantId && x.BranchId == branchId && x.SN >= cursor)
+                                            .Include(x => x.Category)
+                                            .Include(x => x.WarehouseItems.Where(x => x.TenantId == tenantId && x.BranchId == branchId))
+                                            //.Where(x => x.SN >= cursor)
+                                            .OrderBy(x => x.SN)
+                                            .Take(pageSize + 1)
+                                            .Select(c => new SelectedItem
+                                            {
+                                                ItemId = c.Id,
+                                                Sn = c.SN,
+                                                Name = c.Name,
+                                                Description = c.Description,
+                                                ItemQuantity = c.WarehouseItems.Where(x => x.StoreId == storeId && x.ItemId == c.Id).Select(x => x.Instock).SingleOrDefault(),
+                                                CostPrice = c.CostPrice,
+                                                Units = c.Unit,
+                                                IsForSale = c.IsForSale,
+                                                Price = c.Price,
+                                                CategoryName = c.Category!.Name,
+                                                UPCNumber = c.UPCNumber,
+                                            })
+                                            .ToListAsync();
+            int nextCursor = ItemsList[^1].Sn;
+            // int prevCursor = ItemsList[0].Sn;
+            // var cat = ItemsList.Last().Sn;
+            return (nextCursor, ItemsList.Take(pageSize).ToList());
+
+        }
+        catch (System.Exception e)
+        {
+            _logger.LogCritical($"Item Add Error:==> {e}");
+            // throw;
+            //return (0, Enumerable.Empty<SelectedItem>());
+            return (0, new List<SelectedItem>());
+        }
+    }
 }

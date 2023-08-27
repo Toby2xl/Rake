@@ -13,4 +13,7 @@ public interface ITemsRepo
     Task UpdateItemAsync(ItemUpdateDto entity, int tenantId, int branchId, CancellationToken ct);
 
     Task<SelectedItem?> GetSelectedItemByIdAsync(Guid itemId, Guid storeId, int tenantId, int branchId);
+    Task<(int, IReadOnlyList<SelectedItem>)> GetAllItemByStoreAsync(Guid storeId, int tenantId,
+                                                                    int branchId, int cursor, int pageSize,
+                                                                     CancellationToken ct);
 }
