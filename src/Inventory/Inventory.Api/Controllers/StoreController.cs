@@ -1,6 +1,7 @@
 using Inventory.Application;
 using Inventory.Application.Features.Item.Commands.DeleteItem;
 using Inventory.Application.Features.Item.Commands.UpdateItem;
+using Inventory.Application.Features.Item.Query.GetItem;
 using Inventory.Application.Features.Store.Commands.CreateStore;
 using Inventory.Application.Features.Store.Commands.DeleteStore;
 using Inventory.Application.Features.Store.Commands.UpdateStore;
@@ -67,12 +68,12 @@ public class StoreController : ControllerBase
     }
 
     //Items Section...........
-    // [HttpGet("{storeId:guid}/item/{itemId:guid}/{branchId:int}", Name = "GetItem")]
-    // public async Task<ActionResult> GetItem(Guid storeId, Guid itemId, int branchId)
-    // {
-    //     var item = await _mediator.Send(new GetItemQuery(itemId, storeId, branchId));
-    //     return Ok(item);
-    // }
+    [HttpGet("{storeId:guid}/item/{itemId:guid}/{branchId:int}", Name = "GetItem")]
+    public async Task<IResult> GetItem(Guid storeId, Guid itemId, int branchId)
+    {
+        var response = await _mediator.Send(new GetItemQuery(itemId, storeId, branchId));
+        return response.Success ? Results.Ok(response) : Results.NotFound(response);
+    }
 
     [HttpPost("item", Name = "AddItem")]
     public async Task<IResult> CreateItem(CreateItemCommand request)

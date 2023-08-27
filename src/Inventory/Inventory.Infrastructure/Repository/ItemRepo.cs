@@ -26,6 +26,13 @@ public class ItemRepo : ITemsRepo
         var storeId = newItemDto.NewItem.WarehouseId;
         try
         {
+            if(!DoesStoreExist(storeId))
+            {
+                return (false, new ItemCreated
+                {
+                    Message = "There's no such Store name",
+                });
+            }
             if (await _context.Items.AnyAsync(x => x.WarehouseId == storeId && x.Name.ToLower() == itemName && x.TenantId == tenantId && x.BranchId == branchId))
             {
                 return (false, new ItemCreated
@@ -71,6 +78,11 @@ public class ItemRepo : ITemsRepo
             QuantityDetail = newItemDto.QuantityDetails
 
         };
+    }
+
+    private bool DoesStoreExist(Guid? storeId)
+    {
+        return _context.Warehouses.Any(x => x.Id == storeId);
     }
 
     public async Task<(bool, int)> CategoryExistAsync(string name, int tenantId, int branchId)
@@ -139,5 +151,28 @@ public class ItemRepo : ITemsRepo
         storeItems.Item = itemToUpdate;
         _context.Update(storeItems);
         await _context.SaveChangesAsync(ct);
+    }
+
+    public async Task<SelectedItem?> GetSelectedItemByIdAsync(Guid itemId, Guid storeId, int tenantId, int branchId)
+    {
+        var item = await _context.Items.Where(x => x.Id == itemId &&
+                                                x.TenantId == tenantId && x.BranchId == branchId)
+                                                .Include(x => x.Category)
+                                                .Include(x => x.WarehouseItems.Where(x => x.TenantId == tenantId && x.BranchId == branchId))
+                                                .Select(c => new SelectedItem
+                                                {
+                                                    ItemId = c.Id,
+                                                    Name = c.Name,
+                                                    ItemQuantity = c.WarehouseItems.Where(x => x.StoreId == storeId && x.ItemId == c.Id)
+                                                                               .Select(x => x.Instock).SingleOrDefault(),
+                                                    Units = c.Unit,
+                                                    IsForSale = c.IsForSale,
+                                                    CostPrice = c.CostPrice,
+                                                    Price = c.Price,
+                                                    CategoryName = c.Category!.Name,
+                                                    UPCNumber = c.UPCNumber,
+                                                })
+                                                .SingleOrDefaultAsync();
+        return item is not null ? item : default;
     }
 }

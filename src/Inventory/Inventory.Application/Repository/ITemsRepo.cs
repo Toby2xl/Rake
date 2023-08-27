@@ -11,4 +11,6 @@ public interface ITemsRepo
     Task DeleteAsync(ItemDeleteDto entity, CancellationToken ct);
 
     Task UpdateItemAsync(ItemUpdateDto entity, int tenantId, int branchId, CancellationToken ct);
+
+    Task<SelectedItem?> GetSelectedItemByIdAsync(Guid itemId, Guid storeId, int tenantId, int branchId);
 }
