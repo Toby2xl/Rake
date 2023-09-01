@@ -181,7 +181,7 @@ public class ItemRepo : ITemsRepo
         try
         {
             //TODO: Add pagination here, if all is well..... KeySet Pagination
-            var ItemsList = await _context.Items.AsNoTracking()
+            var itemsList = await _context.Items.AsNoTracking()
                                         .Where(x => x.WarehouseId == storeId
                                             && x.TenantId == tenantId && x.BranchId == branchId && x.SN >= cursor)
                                             .Include(x => x.Category)
@@ -204,10 +204,10 @@ public class ItemRepo : ITemsRepo
                                                 UPCNumber = c.UPCNumber,
                                             })
                                             .ToListAsync();
-            int nextCursor = ItemsList[^1].Sn;
+            int nextCursor = itemsList[^1].Sn;
             // int prevCursor = ItemsList[0].Sn;
             // var cat = ItemsList.Last().Sn;
-            return (nextCursor, ItemsList.Take(pageSize).ToList());
+            return (nextCursor, itemsList.Take(pageSize).ToList());
 
         }
         catch (System.Exception e)
